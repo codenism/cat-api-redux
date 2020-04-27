@@ -2,19 +2,18 @@ import React, {Component} from 'react';
 import Layout from './hoc/Layout/Layout'
 import {Route, Switch, Redirect, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
+import CatList from './containers/CatList/CatList'
 
 class App extends Component {
   render() {
 
-    let routes = (
-      <Switch>
-        <Route path="/list" />
-      </Switch>
-    )
 
     return (
       <Layout>
-        { routes }
+        <Switch>
+        <Route path="/" exact component={CatList} />
+        <Redirect to="/" />
+      </Switch>
       </Layout>
     )
   }
