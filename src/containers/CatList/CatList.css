@@ -1,0 +1,16 @@
+.CatList {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.CatContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.CatContainer:after {
+    /* content: ''; */
+    width: 300px;
+    margin: 0 0 0 auto;
+}

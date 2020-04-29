@@ -17,9 +17,9 @@ class CatList extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Список котеек</h1>
-                { this.renderCats() }
+            <div className={classes.CatList}>
+                <h1 className={classes.CatHeader}>Список котеек</h1>
+                <div className={classes.CatContainer}>{ this.renderCats() }</div>
             </div>
         )
     }
