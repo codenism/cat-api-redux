@@ -3,6 +3,7 @@ import Layout from './hoc/Layout/Layout'
 import {Route, Switch, Redirect, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import CatList from './containers/CatList/CatList'
+import Cat from './components/Cat/Cat'
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
     return (
       <Layout>
         <Switch>
+        <Route path="/cats/:breed" component={Cat} />
         <Route path="/" exact component={CatList} />
         <Redirect to="/" />
       </Switch>

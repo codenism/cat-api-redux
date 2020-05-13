@@ -1,13 +1,20 @@
 import React, {Component} from 'react'
 import classes from './CatList.css'
-import Cat from '../../components/Cat/Cat'
+import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {fetchCats} from '../../store/actions/cats'
+import {fetchCats} from '../../store/sagas'
 
 class CatList extends Component {
     renderCats() {
         return this.props.cats.map(cat => (
-            <Cat name={cat.name} id={cat.id} url={cat.url} />
+            <NavLink to={`/cats/${cat.id}`}>
+                <div className={classes.Cat}>
+                    <div className={classes.CatImage}>
+                        <img className={classes.CatImg} src={cat.url} alt={cat.name} />
+                    </div>
+                    <div className={classes.CatName}>{cat.name}</div>
+                </div>
+            </NavLink>
         ))
     }
 

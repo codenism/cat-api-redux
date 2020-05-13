@@ -5,8 +5,9 @@ import './index.css'
 import {BrowserRouter} from 'react-router-dom'
 import {createStore, compose, applyMiddleware} from 'redux'
 import rootReducer from './store/reducers/rootReducer'
-import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
+import createSagaMiddleware, { runSaga } from 'redux-saga'
+import mySaga from './store/sagas'
 
 const composeEnhancers =
   typeof window === 'object' &&
@@ -16,12 +17,17 @@ const composeEnhancers =
     }) : compose;
 
 
+const sagaMiddleware = createSagaMiddleware()
+
+
 const store = createStore(
   rootReducer,
   composeEnhancers(
-    applyMiddleware(thunk)
+    applyMiddleware(sagaMiddleware)
   )
 )
+
+sagaMiddleware.run(mySaga)
 
 const app = (
   <Provider store={store}>

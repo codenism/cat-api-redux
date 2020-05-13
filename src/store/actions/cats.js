@@ -1,4 +1,4 @@
-import axios from '../../axios/axios-image'
+import breed from '../../axios/axios'
 import { FETCH_CATS_START, FETCH_CATS_SUCCESS, FETCH_CATS_ERROR } from './actionTypes';
 
 export function fetchCats() {
@@ -7,14 +7,14 @@ export function fetchCats() {
 
         try {
 
-            const response = await axios.get('/images/search', { params: { limit:10, size:"full" } })
+            const response = await breed.get('/breeds')
             const cats = []
 
-            Object.values(response.data).forEach((image, index) => {
+            Object.values(response.data).forEach((breed, index) => {
                 cats.push({
-                    id: image.id,
-                    url: image.url,
-                    name: `Киса номер ${index + 1}`
+                    id: breed.id,
+                    url: breed.wikipedia_url,
+                    name: breed.name
                 })
             })
 
