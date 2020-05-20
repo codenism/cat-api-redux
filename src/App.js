@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <Layout>
         <Switch>
-        <Route path="/cats/:breed" component={Cat} />
+        <Route path="/cats/:breed/:name" component={Cat} />
         <Route path="/" exact component={CatList} />
         <Redirect to="/" />
       </Switch>

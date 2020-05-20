@@ -1,6 +1,10 @@
 .CatList {
-    max-width: 1200px;
+    max-width: 991px;
     margin: 0 auto;
+}
+
+.CatHeader {
+    text-align: center;
 }
 
 .CatContainer {
@@ -9,34 +13,39 @@
     margin: 0 -10px;
 }
 
-.CatContainer:after {
-    /* content: ''; */
-    width: 300px;
-    margin: 0 0 0 auto;
-}
-
 .Cat {
-    width: 285px;
+    flex-basis: calc(100%/3 - 20px);
     box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.15);
     margin: 10px;
     background-color: #ffffff;
+    text-decoration: none;
+    transition: .4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-.CatImage {
-    overflow: hidden;
-    height: 285px;
-    width: 100%;
+.Cat:after {
+    content: '';
+    background: url('../../icons/arrows.svg') no-repeat center;
+    background-size: 20px 20px;
+    width: 20px;
+    height: 20px;
 }
 
-.CatImg {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+.Cat:hover {
+    box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.45);
+}
+
+.Cat:hover:after {
+    transform: translate(10px, 0);
 }
 
 .CatName {
-    padding: 15px 10px;
     font-size: 16px;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 600;
+    color: #000;
 }

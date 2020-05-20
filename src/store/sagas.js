@@ -1,6 +1,6 @@
 import {call, put, takeEvery, takeLatest} from 'redux-saga/effects'
 import axios from '../axios/axios'
-import { FETCH_CATS, FETCH_CATS_START, FETCH_CATS_SUCCESS, FETCH_CATS_ERROR, FETCH_CAT, FETCH_CAT_START, FETCH_CAT_SUCCESS, FETCH_CAT_ERROR } from './actions/actionTypes';
+import { FETCH_CATS, FETCH_CATS_START, FETCH_CATS_SUCCESS, FETCH_CATS_ERROR, FETCH_CAT_IMAGES, FETCH_CAT_IMAGES_START, FETCH_CAT_IMAGES_SUCCESS, FETCH_CAT_IMAGES_ERROR, CAT_RESET } from './actions/actionTypes';
 
 function* fetchCatsAsync() {
     try {
@@ -26,12 +26,13 @@ function* fetchCatsAsync() {
     }
 }
 
-function* fetchCatByIdAsync(action) {
+function* fetchCatImagesByIdAsync(action) {
     try {
-        yield put(fetchCatStart())
+        yield put(fetchCatImagesStart())
 
         const data = yield call(() => {
-            return axios.get(`/breeds/search?q=${action.breed}`).then(res => res.data[0])
+            return axios.get(`/breeds/search?q=${action.name}`)
+                            .then(res => res.data[0])
         })
 
         const images = yield call(() => {
@@ -40,20 +41,20 @@ function* fetchCatByIdAsync(action) {
                             size:"full",
                             breed_id: action.breed
                         })
-                            .then(res => res.data)
+                            .then(res => res.data[0])
         })
 
         data.images = images
 
-        yield put(fetchCatSuccess(data))
+        yield put(fetchCatImagesSuccess(data))
     } catch(error) {
-        yield put(fetchCatError(error))
+        yield put(fetchCatImagesError(error))
     }
 }
 
 function* mySaga() {
     yield takeEvery(FETCH_CATS, fetchCatsAsync)
-    yield takeEvery(FETCH_CAT, fetchCatByIdAsync)
+    yield takeEvery(FETCH_CAT_IMAGES, fetchCatImagesByIdAsync)
 }
 
 export const fetchCats = () => {
@@ -61,6 +62,13 @@ export const fetchCats = () => {
         type: FETCH_CATS
     }
 }
+
+export const resetCat = () => {
+    return {
+        type: CAT_RESET
+    }
+}
+
 const fetchCatsStart = () => {
     return {
         type: FETCH_CATS_START
@@ -81,29 +89,30 @@ const fetchCatsError = (e) => {
     }
 }
 
-export const fetchCatById = (breed) => {
+export const fetchCatImagesById = (breed, name) => {
     return {
-        type: FETCH_CAT,
-        breed
+        type: FETCH_CAT_IMAGES,
+        breed,
+        name
     }
 }
 
-const fetchCatStart = () => {
+const fetchCatImagesStart = () => {
     return {
-        type: FETCH_CAT_START
+        type: FETCH_CAT_IMAGES_START
     }
 }
 
-const fetchCatSuccess = (cat) => {
+const fetchCatImagesSuccess = (cat) => {
     return {
-        type: FETCH_CAT_SUCCESS,
+        type: FETCH_CAT_IMAGES_SUCCESS,
         cat
     }
 }
 
-const fetchCatError = (error) => {
+const fetchCatImagesError = (error) => {
     return {
-        type: FETCH_CAT_ERROR,
+        type: FETCH_CAT_IMAGES_ERROR,
         error
     }
 }

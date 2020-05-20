@@ -1,36 +1,55 @@
 import React, {Component} from 'react'
 import classes from './Cat.css'
 import {connect} from 'react-redux'
-import {fetchCatById} from '../../store/sagas'
+import {fetchCatImagesById, resetCat} from '../../store/sagas'
+import Loader from '../UI/Loader/Loader'
 
 class Cat extends Component {
     componentDidMount() {
-        this.props.fetchCatById(this.props.match.params.breed)
+        this.props.fetchCatImagesById(this.props.match.params.breed, this.props.match.params.name)
+    }
+
+    componentWillUnmount() {
+        this.props.resetCat()
     }
 
     renderImages() {
-        return this.props.cat.images ? this.props.cat.images.map(image => (<img className={classes.CatImg} src={image.url} />)) : false
+        return this.props.cat.images.url ? <img className={classes.CatImg} src={this.props.cat.images.url} /> : false
+    }
+
+    renderSpecs() {
+        
     }
 
     render() {
         return (
             <div className={classes.Cat}>
-                    <div className={classes.CatName}>{this.props.cat.name}</div>
-                    <div className={classes.CatImage}>
-                        {
-                            this.renderImages()
-                        }
-                        
+                {
+                    this.props.loading && this.props.cat.length == 0 ?
+                    <Loader/>
+                    :
+
+                    <div className={classes.CatBlock}>
+                        <div className={classes.CatImage}>
+                            {
+                                this.renderImages()
+                            }
+                        </div>
+                        <div className={classes.CatInfo}>
+                        <div className={classes.CatDescription}>
+                            <div className={classes.CatInfoTitle}>Description</div>
+                            { this.props.cat.description }
+                        </div>
+                        <div className={classes.CatSpecs}>
+                            {
+                                
+                                this.renderSpecs()
+                            }
+                        </div>
+                        </div>
                     </div>
-                    <div className={classes.CatDescription}>{this.props.cat.description}</div>
-                    <div className={classes.CatSpecs}>
-                        <ul className={classes.CatSpecsList}>
-                            <li class={classes.CatSpecsItem}>
-                                <span className={classes.CatSpecsItemLabel}>Temperament</span>
-                                <span className={classes.CatSpecsItemValue}>{this.props.cat.temperament}</span>
-                            </li>
-                        </ul>
-                    </div>
+                    
+                } 
                 </div>
         )
     }
@@ -45,7 +64,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchCatById: breed => dispatch(fetchCatById(breed))
+        fetchCatImagesById: (breed, name) => dispatch(fetchCatImagesById(breed, name)),
+        resetCat: () => dispatch(resetCat())
     }
 }
 

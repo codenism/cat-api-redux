@@ -1,13 +1,23 @@
 .Cat {
-    width: calc(100% - 40px);
-    margin: 20px auto;
+    width: 100%;
+    max-width: 991px;
+    margin: 0 auto;
+}
+
+.CatBlock {
     box-shadow: 0px 1px 6px 0px rgba(0,0,0,0.15);
     background-color: #ffffff;
+    text-align: center;
+    padding: 20px;
 }
 
 .CatImg {
     width: auto;
-    max-width: 100%;
+    max-width: 600px;
+}
+
+.CatImage {
+    margin: 20px auto;
 }
 
 .CatName {
@@ -15,4 +25,10 @@
     font-size: 16px;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 600;
+}
+
+.CatSpecsItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

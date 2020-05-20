@@ -1,4 +1,4 @@
-import { FETCH_CATS_START, FETCH_CATS_SUCCESS, FETCH_CATS_ERROR, FETCH_CAT_START, FETCH_CAT_SUCCESS, FETCH_CAT_ERROR } from "../actions/actionTypes";
+import { FETCH_CATS_START, FETCH_CATS_SUCCESS, FETCH_CATS_ERROR, FETCH_CAT_IMAGES_START, FETCH_CAT_IMAGES_SUCCESS, FETCH_CAT_IMAGES_ERROR, CAT_RESET } from "../actions/actionTypes";
 
 const initialState = {
     cats: [],
@@ -9,7 +9,7 @@ const initialState = {
 
 export default function catsReducer(state = initialState, action) {
     switch (action.type) {
-        case FETCH_CATS_START, FETCH_CAT_START: 
+        case FETCH_CATS_START, FETCH_CAT_IMAGES_START: 
             return {
                 ...state, loading: true
             }
@@ -17,13 +17,17 @@ export default function catsReducer(state = initialState, action) {
             return {
                 ...state, loading: false, cats: action.cats
             }
-        case FETCH_CATS_ERROR, FETCH_CAT_ERROR:
+        case FETCH_CATS_ERROR, FETCH_CAT_IMAGES_ERROR:
             return {
                 ...state, loading: false, error: action.error
             }
-        case FETCH_CAT_SUCCESS:
+        case FETCH_CAT_IMAGES_SUCCESS:
             return {
                 ...state, loading: false, cat: action.cat
+            }
+        case CAT_RESET:
+            return {
+                ...state, loading: false, cat: []
             }
         default:
             return state
